@@ -1,0 +1,294 @@
+.operation-container {
+    position: relative;
+    padding-top: 60px;
+}
+
+.number-box {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    border: 3px solid #ef4444;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    position: relative;
+}
+
+.carry-btn {
+    background: white;
+    color: #ef4444;
+    border: 2px solid #ef4444;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+}
+
+.carry-btn:hover {
+    background: #fef2f2;
+    transform: scale(1.05);
+}
+
+.step-number {
+    min-width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fee2e2;
+    border-radius: 50%;
+    margin-top: 2px;
+}
+
+.carry-container {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+}
+
+.carry-animation {
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    opacity: 0;
+    animation: carryMove 2s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+
+.carry-animation::before,
+.carry-animation::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fecaca 0%, transparent 70%);
+    animation: stardustPulse 2s infinite;
+}
+
+.carry-animation::after {
+    animation-delay: 0.5s;
+}
+
+.carry-text {
+    color: #ef4444;
+    font-weight: bold;
+    font-size: 1rem;
+    opacity: 0;
+    margin-bottom: 5px;
+    animation: carryTextMove 2s forwards;
+    white-space: nowrap;
+}
+
+.flying-number {
+    position: fixed;
+    font-size: 1.5rem;
+    color: #ef4444;
+    font-weight: bold;
+    pointer-events: none;
+    animation: flyToBox 2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    z-index: 1000;
+}
+
+.input-highlight {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: highlightPulse 2s infinite;
+}
+
+#sumInput {
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    margin: 0;
+    font-size: 1.5rem;
+    cursor: text;
+    caret-color: #ef4444;
+    transition: all 0.2s;
+}
+
+#sumInput::-webkit-outer-spin-button,
+#sumInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#sumInput:focus {
+    outline: none;
+    border-color: #ef4444;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+@keyframes flyToBox {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    60% {
+        transform: translate(var(--targetX), var(--targetY)) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--targetX), var(--targetY)) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes highlightPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+@keyframes carryMove {
+    0% {
+        opacity: 0;
+        transform: translate(-50px, -20px);
+        scale: 0.5;
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-25px, -10px);
+        scale: 1.2;
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+        scale: 1;
+    }
+}
+
+@keyframes stardustPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+}
+
+@keyframes writeNumber {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+        scale: 1.5;
+    }
+    60% {
+        transform: translateY(0);
+        opacity: 1;
+        scale: 1.2;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+.number-write-animation {
+    animation: writeNumber 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 640px) {
+    .carry-container {
+        left: 20%;
+    }
+
+    .number-box {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+
+    .carry-btn {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+
+    .carry-text {
+        font-size: 0.9rem;
+    }
+
+    .carry-animation {
+        width: 25px;
+        height: 25px;
+        font-size: 1rem;
+    }
+
+    .operation-container {
+        padding-top: 50px;
+    }
+
+    #sumInput {
+        font-size: 1.25rem;
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .flying-number {
+        font-size: 1.25rem;
+    }
+}
+
+/* Dokunmatik engelleme */
+* {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Input stilleri */
+input[readonly] {
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Placeholder stil */
+#sumInput::placeholder {
+    color: #9ca3af;
+}
